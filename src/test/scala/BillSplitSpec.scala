@@ -80,4 +80,22 @@ class BillSplitSpec extends AnyFunSpec with Matchers with FixtureData {
       result(jane) shouldBe 38.54
     }
   }
+  describe("Group Payment") {
+    it("Both Tax and Tip - Tip calculated *BEFORE* Tax") {
+      val result = calculateBillSplit(
+        americanaDemoBill,
+        taxPercentage = Some(0.08875),
+        tipPercentage = Some(0.20),
+        isTipAfterTax = false
+      )
+
+      result.size shouldBe 6
+      result(john) shouldBe 43.60
+      result(tom) shouldBe 82.27
+      result(richard) shouldBe 43.60
+      result(harry) shouldBe 92.58
+      result(jane) shouldBe 43.60
+      result(theCouple) shouldBe 86.13
+    }
+  }
 }
